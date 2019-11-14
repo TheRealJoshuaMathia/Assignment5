@@ -1,6 +1,6 @@
 
 /*
-Authors: Parker Guillen 
+Authors: Parker Guillen, Josh Mathia
 Date: 11/13/19
 Class: Cpts 223 
 Project: PA#5 scheduler 
