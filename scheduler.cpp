@@ -93,6 +93,19 @@ bool Scheduler::checkavailable(int neededprocessors)
 	}
 	else
 	{
-		success = false; 
+		success = false;		//not enough processors avaiable handle later 
 	}
+}
+
+//adding 12:26
+
+void Scheduler::DecrementTimer()
+{
+	//loop through running queue and decrement the number of ticks for each job 
+}
+
+
+void Scheduler::freeprocessors()
+{
+	//serach through wait queue look for number of ticks being zero, remove 
 }
