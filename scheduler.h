@@ -1,3 +1,6 @@
+#pragma once
+
+
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -8,8 +11,6 @@
 #include <set>
 #include <queue>
 
-//Inlude Jobs
-#include "job.hpp"
 
 using std::cin;
 using std::cout;
@@ -22,6 +23,7 @@ using std::istream;
 using std::ostream;
 using namespace std;
 
+#include "Job.h" 
 
 class Scheduler
 {
@@ -29,17 +31,22 @@ public:
 	Scheduler(int processors); //consturctor initalize with number of processors 
 	~Scheduler();			   //destructor 
 	//void readfilejob();
-	void readline(ifstream & infile);				
-	void tick();							//tick is a function itself probably call all other fucntions within tick 
+	Job readline(ifstream & infile, int jobid);		//returns job to be inserted
+	void insertjob(Job toinsert);
+	//void tick();							//tick is a function itself probably call all other fucntions within tick 
 	//void insertjobintowaitqueue();
 	//wait queue 
 	//findshortest 
 	//checkava processor pool function 
 	//delete shortest
 	//runjob assign processors 
+	Job findshortest();						//returns the shortest job 
+	void setprocessors(int numProc); 
+	void deleteshortest();
+	bool checkavailable(int neededprocessors);
 
-
-
+	void DecrementTimer(); //decrement time for each running job //go through running job queue and decrement each time value 
+	void freeprocessors();	//
 	//decrease timer after each tick 
 	//also relases processors during this time 
 	//
@@ -51,7 +58,7 @@ private:
 	int num_processors;			//basic definied on consturction 
 
 	//priority queue info 
-	priority_queue<Jobs, vector<Jobs> , Compareclass> waitqueue;				//wait queue made of jobs need to have queue based on number of ticks 
+	priority_queue<Job, vector<Job> , Compareclass> waitqueue;				//wait queue made of jobs need to have queue based on number of ticks 
 	//need to find_shortest which just returns top of the queue 
 	//delete shortest which deletes the top of the queue								//how do we arrage data in terms of ticks so queue is minium # of times - solved by using comparator class
 	//				if queue is not empty 
@@ -62,7 +69,7 @@ private:
 
 	int freepool; //holds current number of processors avaiable to use 
 	//
-	queue<job> runqueue; //for running queue 
+	//queue<job> runqueue; //for running queue 
 	//how do we access the number of ticks and the number of processors for each job in the running queue 
 
 
@@ -73,17 +80,17 @@ private:
 //compareclass is to specify which values are compared in stl priority queue 
 
 //needed to specify which values are compared in min heap 
-class Compareclass
-{
-
-public:
-
-	int operator(const Job& j1, const Job& j2)
-	{
-		return j1.getticks() > j2.getticks();
-	}
-
-
-
-
-};
+//class Compareclass
+//{
+//
+//public:
+//
+//	int operator(const Job& j1, const Job& j2)
+//	{
+//		return j1.getticks() > j2.getticks();
+//	}
+//
+//
+//
+//
+//};
