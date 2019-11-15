@@ -30,3 +30,19 @@ int Job::getticks() const
 {
 	return this->jobticks;
 }
+
+int Job::getjobid() const
+{
+	return this->jobID;
+}
+
+string Job::getjobdes() const
+{
+	return this->jobDesc;
+}
+
+void Job::setticks(int newticks)
+{
+	this->jobticks = newticks;
+	 
+}
