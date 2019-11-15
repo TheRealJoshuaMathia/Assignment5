@@ -10,7 +10,10 @@ public:
 	~Job();
 	int getprocessor()const;
 	int getticks() const; 
+	int getjobid() const; 
+	string getjobdes() const;
 
+	void setticks(int newticks);
 	//void initJob(string& desc, int& processors, int& ticks, int& idNum);
 private:
 	// Job ID number
