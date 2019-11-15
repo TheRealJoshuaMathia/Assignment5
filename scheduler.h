@@ -45,23 +45,36 @@ public:
 	void deleteshortest();
 	bool checkavailable(int neededprocessors);
 
+	//void findfinished();
+
+	vector<Job>::iterator freeprocessors(vector<Job>::iterator next);
+
 	void DecrementTimer(); //decrement time for each running job //go through running job queue and decrement each time value 
-	void freeprocessors();	//
+//	void freeprocessors(int completed);	//
+	void Runjob(Job torun);
 	//decrease timer after each tick 
 	//also relases processors during this time 
 	//
 
 private:
-	//priorty queue(wait queue ) 
-	//processor pool data sturcture 
+	
+
 	//running queue //holds current number of jobs running 
 	int num_processors;			//basic definied on consturction 
 
-	//priority queue info 
-	priority_queue<Job, vector<Job> , Compareclass> waitqueue;				//wait queue made of jobs need to have queue based on number of ticks 
-	//need to find_shortest which just returns top of the queue 
-	//delete shortest which deletes the top of the queue								//how do we arrage data in terms of ticks so queue is minium # of times - solved by using comparator class
-	//				if queue is not empty 
+
+
+	//Data structures 
+	
+	priority_queue<Job, vector<Job> , Compareclass> waitqueue;				//wait queue made of jobs need to have queue based on number of ticks is min heap  
+
+	//Running queue could use vector, set or map 
+	vector<Job> runningqueue; 
+
+
+
+							//how do we arrage data in terms of ticks so queue is minium # of times - solved by using comparator class
+	
 	//					find_shortest job (top()) next check avaiablity 
 	//			if(processors are aviavle ){delete shortest remove n procs from free pool }				//free pool is just a variable  
 	//				{then assign processors with run job}
