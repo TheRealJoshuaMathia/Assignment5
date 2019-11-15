@@ -31,6 +31,9 @@ public:
 	Scheduler(int processors); //consturctor initalize with number of processors 
 	~Scheduler();			   //destructor 
 	//void readfilejob();
+
+	int getprocs() const;
+
 	Job readline(ifstream & infile, int jobid);		//returns job to be inserted
 	void insertjob(Job toinsert);
 	//void tick();							//tick is a function itself probably call all other fucntions within tick 
@@ -42,12 +45,13 @@ public:
 	//runjob assign processors 
 	Job findshortest();						//returns the shortest job 
 	void setprocessors(int numProc); 
+	void setfreepool(int np);
 	void deleteshortest();
 	bool checkavailable(int neededprocessors);
-
+	bool waitqueueempty(); 
 	//void findfinished();
 
-	vector<Job>::iterator freeprocessors(vector<Job>::iterator next);
+	void freeprocessors();
 
 	void DecrementTimer(); //decrement time for each running job //go through running job queue and decrement each time value 
 //	void freeprocessors(int completed);	//
