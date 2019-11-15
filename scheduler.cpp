@@ -47,14 +47,15 @@ Job Scheduler::readline(ifstream & infile, int jobid)
 	if (jobname == "")
 	{
 		//if jobname is null do not insert job into wait prioity queue end function 
-
+		Job nojob("", 0, 0, 0);
+		return nojob; 
 	}
 	else
 	{//assign new id and insert into wait queue 
 		//job id is not null so create a class to return 
 		//handle initalizing
 
-		Job newjob(jobname, procs, ticks,jobid);
+		Job newjob(jobname, procs, ticks, jobid);
 		return newjob;
 //		this->insertjob(jobid, jobname, num_proc, num_ticks);  //insert into wait queue 
 	}
@@ -66,46 +67,141 @@ void Scheduler::insertjob(Job toinsert)
 {
 	//check if job id is null
 	//if()
-	this->waitqueue.push(toinsert); 
-
-
+	if (toinsert.getjobdes() == "")				//might want to handle somewhere else 
+	{
+		cout << "No job to be inserted." << endl;
+	}
+	else
+	{
+		this->waitqueue.push(toinsert);	//inserting job into wait queue  
+		cout << "Job Id " << toinsert.getjobid() << " successfully submitted" << endl;
+		//says when job is inserted into wait queue
+	}
 }
 
 
 //
 Job Scheduler::findshortest()
 {
+	//O(c) finds root 
+	//waitqueue.top().getprocessor();
+
 	return this->waitqueue.top(); //returns the data at the top of the queue 
+
+	//might put delete and check availablity here as well 
+
 }
 
 void Scheduler::deleteshortest()
 {
-	this->waitqueue.pop(); //remove the minimun value in the heap or as of now the max value 
+	//O(c) deletes root 
+	this->waitqueue.pop(); //remove the minimun value in the heap 
 }
 
 bool Scheduler::checkavailable(int neededprocessors)
-{	
+{	//O(c)
 	bool success = false;
 	if (this->freepool >= neededprocessors)				//if needed processors 
 	{
 		//if enough processors are available  
 		success = true;
+		this->freepool = this->freepool - neededprocessors;
 	}
 	else
 	{
-		success = false;		//not enough processors avaiable handle later 
+		success = false;		//not enough processors avaiable function ceasses 
+		//find next shortest job and retry 
 	}
+	return success;
 }
 
 //adding 12:26
 
 void Scheduler::DecrementTimer()
 {
+	//O(n)
 	//loop through running queue and decrement the number of ticks for each job 
+	vector<Job>::iterator check = this->runningqueue.begin();
+
+	while (check != this->runningqueue.end())
+	{
+		//->setticks() = it->getticks() - 1;		//decrease amount of ticks by 1 for each item in the structure 
+		check->setticks(check->getticks() - 1);		//loops through vector and decreases ticks for every value by 1 
+		check++;
+	}
+
 }
 
 
-void Scheduler::freeprocessors()
+vector<Job>::iterator Scheduler::freeprocessors(vector<Job>::iterator next)
+{	
+	vector<Job>::iterator nextit; 
+	vector<Job>::iterator it = this->runningqueue.begin();
+
+	//O(n)
+
+	if (it->getticks() == 0)
+	{
+		//this->freeprocessors((it->getprocessor());
+		this->freepool = this->freepool + it->getprocessor();			//free the processors 
+		cout << "Job completed: " << "Job description: " << it->getjobdes() << ", Proc: " << it->getprocessor() << ", ticks: " << it->getticks() << endl;
+		
+		nextit = runningqueue.erase(it);
+		return nextit;
+	}
+	else
+	{
+		it++;
+		return it; 
+	}
+	/*
+
+	while (loop through running queue)
+	{
+		if (queuejob.getticks() == 0)
+		{
+			this->freepool = this->freepool + completed.getprocessor();
+			cout << "Job completed: " << "Job description: " << completed.getjobdes() << ", Proc: " << completed.getprocessor() << ", ticks: " << completed.getticks() << endl;
+			this->freeprocessors(currentjob); 
+			//move to next location
+		}
+		else
+		{
+			//move to next location 
+		}
+	}
+	*/
+}
+
+/*
+void Scheduler::freeprocessors(int completed)
 {
+	//will search through running queue 
+	//if(completed.getticks() == 0)
+	//{
+	//	this->freepool = this->freepool + completed.getprocessor(); 
+	//	cout << "Job completed: " << "Job description: " << completed.getjobdes() << ", Proc: " << completed.getprocessor() << ", ticks: " << completed.getticks() << endl;
+
+	//
+	//}
 	//serach through wait queue look for number of ticks being zero, remove 
+
+
+	this->freepool = this->freepool + completed.getprocessor(); //restore processors 
+	//cout << "Job completed: " << "Job description: " << completed.getjobdes() << ", Proc: " << completed.getprocessor() << ", ticks: " << completed.getticks() << endl;
+}
+*/
+
+void Scheduler::Runjob(Job torun)
+{		
+	//runs job just poped off of prority queue 
+	//O(c)
+	//testing with vector implementation 
+	//pass job into run queue 
+	this->runningqueue.push_back(torun);
+
+	//print job started
+	cout << "Job Started: " << "Job description: " << torun.getjobdes() << ", Proc: " << torun.getprocessor() << ", ticks: " << torun.getticks() << endl; 
+
+
 }

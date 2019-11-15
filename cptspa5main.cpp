@@ -1,6 +1,6 @@
 
 /*
-Authors: Parker Guillen, Josh Mathia
+Authors: Parker Guillen 
 Date: 11/13/19
 Class: Cpts 223 
 Project: PA#5 scheduler 
@@ -39,7 +39,30 @@ int main(void)
 	testing.insertjob(newJob2);
 	
 	Job toprint("", 0, 0, 0);
-	toprint = testing.findshortest();		 
+	toprint = testing.findshortest();
+	bool avaiproc = false; 
+	avaiproc = testing.checkavailable(toprint.getprocessor());		//
+
+	//vector<Job>::iterator run;//if doing this way i need to have a getvectorbegin in scheduler 
+	if (avaiproc == false)
+	{
+
+		//move to next value in prority queue; 
+		//break; //return back up to next tick 
+	}
+	else
+	{
+		testing.deleteshortest(); 
+		//pass toprint (the job just popped from the stack ) into running queue with run job
+		testing.Runjob(toprint);				//send job to running queue vector 
+
+		//while()
+	}
+	//testing.freeprocessors();
+
+
+
+
 
 	cout << "11:00 testing: \t" << toprint.getprocessor() << endl; 
 
