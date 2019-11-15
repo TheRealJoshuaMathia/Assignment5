@@ -36,7 +36,7 @@ Job Scheduler::readline(ifstream & infile, int jobid)
 	ticks = stoi(num_ticks);
 	procs = stoi(num_proc);
 	//need to make sure this will work for many lines 
-	cout << jobname << num_ticks << num_proc << endl;
+	cout << jobname << ticks << procs << endl;
 
 
 
@@ -132,27 +132,37 @@ void Scheduler::DecrementTimer()
 
 }
 
+int Scheduler::getprocs() const
+{
+	return this->freepool;
+}
 
-vector<Job>::iterator Scheduler::freeprocessors(vector<Job>::iterator next)
+void Scheduler::setfreepool(int np)
+{
+	this->freepool = np;
+}
+
+void Scheduler::freeprocessors()
 {	
 	vector<Job>::iterator nextit; 
-	vector<Job>::iterator it = this->runningqueue.begin();
+	//vector<Job>::iterator it = this->runningqueue.begin();
 
 	//O(n)
+	for (vector<Job>::iterator i = this->runningqueue.begin(); i != this->runningqueue.end(); i++)
+	{
 
-	if (it->getticks() == 0)
-	{
-		//this->freeprocessors((it->getprocessor());
-		this->freepool = this->freepool + it->getprocessor();			//free the processors 
-		cout << "Job completed: " << "Job description: " << it->getjobdes() << ", Proc: " << it->getprocessor() << ", ticks: " << it->getticks() << endl;
-		
-		nextit = runningqueue.erase(it);
-		return nextit;
-	}
-	else
-	{
-		it++;
-		return it; 
+		if (i->getticks() == 0)
+		{
+			//this->freeprocessors((it->getprocessor());
+			this->freepool = this->freepool + (i->getprocessor());			//free the processors 
+			cout << "Job completed: " << "Job description: " << i->getjobdes() << ", Proc: " << i->getprocessor() << ", ticks: " << i->getticks() << endl;
+			//if (i != this->runningqueue.end())
+			//{
+			nextit = runningqueue.erase(i);
+			i = nextit;
+			//}
+			//return nextit;
+		}
 	}
 	/*
 
@@ -204,4 +214,18 @@ void Scheduler::Runjob(Job torun)
 	cout << "Job Started: " << "Job description: " << torun.getjobdes() << ", Proc: " << torun.getprocessor() << ", ticks: " << torun.getticks() << endl; 
 
 
+}
+
+bool Scheduler::waitqueueempty()
+{
+	bool success = false;
+	if (this->waitqueue.empty() == true)
+	{
+		success = true;
+	}
+	else
+	{
+		success = false;
+	}
+	return success; 
 }
