@@ -23,7 +23,7 @@ using std::istream;
 using std::ostream;
 using namespace std;
 
-#include "Job.h" 
+#include "job.h" 
 
 class Scheduler
 {
@@ -31,23 +31,22 @@ public:
 	Scheduler(int processors); //consturctor initalize with number of processors 
 	~Scheduler();			   //destructor 
 	//void readfilejob();
+	
+	int getProcs() const;
+
 	Job readline(ifstream & infile, int jobid);		//returns job to be inserted
-	void insertjob(Job toinsert);
+	void insertJob(Job toinsert);
 	//void tick();							//tick is a function itself probably call all other fucntions within tick 
 	//void insertjobintowaitqueue();
-	//wait queue 
-	//findshortest 
-	//checkava processor pool function 
-	//delete shortest
-	//runjob assign processors 
-	Job findshortest();						//returns the shortest job 
-	void setprocessors(int numProc); 
-	void deleteshortest();
-	bool checkavailable(int neededprocessors);
-
+	Job findShortest();						//returns the shortest job 
+	void setProcessors(int numProc); 
+	void setFreepool(int np);
+	void deleteShortest();
+	bool checkAvailable(int neededprocessors);
+	bool waitqueueEmpty(); 
 	//void findfinished();
 
-	vector<Job>::iterator freeprocessors(vector<Job>::iterator next);
+	void freeProcessors();
 
 	void DecrementTimer(); //decrement time for each running job //go through running job queue and decrement each time value 
 //	void freeprocessors(int completed);	//
@@ -57,13 +56,8 @@ public:
 	//
 
 private:
-	
-
 	//running queue //holds current number of jobs running 
 	int num_processors;			//basic definied on consturction 
-
-
-
 	//Data structures 
 	
 	priority_queue<Job, vector<Job> , Compareclass> waitqueue;				//wait queue made of jobs need to have queue based on number of ticks is min heap  
@@ -71,39 +65,5 @@ private:
 	//Running queue could use vector, set or map 
 	vector<Job> runningqueue; 
 
-
-
-							//how do we arrage data in terms of ticks so queue is minium # of times - solved by using comparator class
-	
-	//					find_shortest job (top()) next check avaiablity 
-	//			if(processors are aviavle ){delete shortest remove n procs from free pool }				//free pool is just a variable  
-	//				{then assign processors with run job}
-	//check if more processors are avaiable to run or find next shortest job
-
-	int freepool; //holds current number of processors avaiable to use 
-	//
-	//queue<job> runqueue; //for running queue 
-	//how do we access the number of ticks and the number of processors for each job in the running queue 
-
-
+	int freepool; //holds current number of processors avaiable to use 	
 };
-
-//NEEDED CLASSES:
-//job class to access ticks and n_processors 
-//compareclass is to specify which values are compared in stl priority queue 
-
-//needed to specify which values are compared in min heap 
-//class Compareclass
-//{
-//
-//public:
-//
-//	int operator(const Job& j1, const Job& j2)
-//	{
-//		return j1.getticks() > j2.getticks();
-//	}
-//
-//
-//
-//
-//};
