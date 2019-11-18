@@ -22,7 +22,6 @@ private:
 	// Number of ticks
 	int jobTicks;
 
-	int jobTimer;
 };
 
 class Compareclass
