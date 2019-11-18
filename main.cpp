@@ -6,7 +6,7 @@ Project: PA#5 Scheduler
 Description:
 */
 
-#include "app.h"
+#include "App.h"
 
 int main()
 {

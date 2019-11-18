@@ -23,7 +23,7 @@ using std::istream;
 using std::ostream;
 using namespace std;
 
-#include "job.h" 
+#include "Job.h" 
 
 class Scheduler
 {

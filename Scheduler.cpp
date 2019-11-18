@@ -1,4 +1,4 @@
-#include "scheduler.h"
+#include "Scheduler.h"
 
 // Function: Scheduler(int processors)
 // Constructor

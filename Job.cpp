@@ -1,4 +1,4 @@
-#include "job.h"
+#include "Job.h"
 
 // Function: Job()
 // Constructor. Creates an instance a Job.
