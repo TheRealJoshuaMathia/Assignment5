@@ -1,48 +1,54 @@
+#include "job.h"
 
-
-#include "Job.h"
-
+// Function: Job()
+// Constructor. Creates an instance a Job.
+// Initalizes the properties of a Job.
 Job::Job(string desc, int processors, int ticks, int idNum)
 {
 	this->jobDesc = desc;
 	this->jobProc = processors;
-	this->jobticks = ticks;
+	this->jobTicks = ticks;
 	this->jobID = idNum;
 }
+
+// Function: ~Job()
+// Destructor. This destroys the Job object
 Job::~Job()
 {
 
 }
-//void Job::initJob(string& desc, int& processors, int& ticks, int& idNum)
-//{
-//
-//	this->jobDesc = desc;
-//	this->jobProc = processors;
-//	this->jobticks = ticks;
-//	this->jobID = idNum;
-//}
-int Job::getprocessor()const
+
+// Function: getProcessor()
+// This function returns processors from the job.
+int Job::getProcessor()const
 {
 	return this->jobProc;
 }
 
-int Job::getticks() const
+// Function: getTicks()
+// This function returns the number of ticks from the job.
+int Job::getTicks() const
 {
-	return this->jobticks;
+	return this->jobTicks;
 }
 
-int Job::getjobid() const
+// Function: getJobid()
+// This function returns the job id.
+int Job::getJobid() const
 {
 	return this->jobID;
 }
 
-string Job::getjobdes() const
+// Function: getJobdes()
+// This function returns the job description.
+string Job::getJobdes() const
 {
 	return this->jobDesc;
 }
 
-void Job::setticks(int newticks)
+// Function: setTicks()
+// This function sets the ticks for the job.
+void Job::setTicks(int newticks)
 {
-	this->jobticks = newticks;
-	 
+	this->jobTicks = newticks;	 
 }

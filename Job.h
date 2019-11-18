@@ -1,20 +1,17 @@
 #pragma once
 
-
-#include "iostream";
+#include "iostream"
 using namespace std;
 class Job
 {
 public:
 	Job(string desc, int processors, int ticks, int idNum);
 	~Job();
-	int getprocessor()const;
-	int getticks() const; 
-	int getjobid() const; 
-	string getjobdes() const;
-
-	void setticks(int newticks);
-	//void initJob(string& desc, int& processors, int& ticks, int& idNum);
+	int getProcessor()const;
+	int getTicks() const; 
+	int getJobid() const; 
+	string getJobdes() const;
+	void setTicks(int newticks);
 private:
 	// Job ID number
 	int jobID;
@@ -22,19 +19,20 @@ private:
 	string jobDesc;
 	// Number of processors
 	int jobProc;
-	int jobticks;
+	// Number of ticks
+	int jobTicks;
+
+	int jobTimer;
 };
-
-
 
 class Compareclass
 {
 
-public:			//pass this class into priority queue to allow for heap to be constructed based on number of ticks 
+public:
 
-	int operator() (const Job& j1, const Job& j2)
+	int operator () (const Job& j1, const Job& j2)
 	{
-		return j1.getticks() > j2.getticks();
+		return j1.getTicks() > j2.getTicks();
 	}
 
 };
