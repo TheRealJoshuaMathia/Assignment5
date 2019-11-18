@@ -1,4 +1,4 @@
-#include "app.h"
+#include "App.h"
 
 // Function: App()
 // Constructor. Creates an instance of the App class
