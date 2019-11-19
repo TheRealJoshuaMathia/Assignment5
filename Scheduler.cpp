@@ -35,9 +35,13 @@ Job Scheduler::readline(ifstream & infile, int jobid)
 	string num_ticks;
 	string num_proc;
 
-	getline(infile, jobname, '\t'); // gets job name
-	getline(infile, num_proc, '\t'); // gets number of processors
-	getline(infile, num_ticks, '\n'); // gets number of ticks
+	infile >> jobname;
+	infile >> num_ticks;
+	infile >> num_proc;
+
+	// getline(infile, jobname, '\t'); // gets job name
+	// getline(infile, num_proc, '\t'); // gets number of processors
+	// getline(infile, num_ticks, '\n'); // gets number of ticks
 
 	int ticks = 0; 
 	int procs = 0; 
@@ -48,17 +52,18 @@ Job Scheduler::readline(ifstream & infile, int jobid)
 	// Prints out the data read
 	cout << "Job Name: " << jobname << " Number of ticks: " << ticks << " Number of Processors: " << procs << endl;
 
-	//if jobname is null do not insert job into wait prioity queue end function 
-	if (jobname == "")
-	{
-		Job nojob("", 0, 0, 0);
-		return nojob; 
-	}
-	else
+	if (jobname.find('J') != string::npos)
 	{
 		//assign new id and insert into wait queue
 		Job newjob(jobname, procs, ticks, jobid);
 		return newjob;
+		
+	}
+	//if jobname is null do not insert job into wait prioity queue end function
+	else 
+	{
+		Job nojob("", 0, 0, 0);
+		return nojob; 
 	}
 }
 
@@ -126,7 +131,7 @@ bool Scheduler::checkAvailable(int neededprocessors)
 void Scheduler::DecrementTimer()
 {
 	//loop through running queue and decrement the number of ticks for each job 
-	vector<Job>::iterator check = this->runningqueue.begin();
+	list<Job>::iterator check = this->runningqueue.begin();
 
 	while (check != this->runningqueue.end())
 	{
@@ -171,7 +176,7 @@ void Scheduler::freeProcessors()
 		}
 		else // Move the iterator if the following condition is not true
 		{
-			it++;
+			++it;
 		}
 	}		
 }
@@ -180,7 +185,7 @@ void Scheduler::freeProcessors()
 // Constructor
 // Initalizes the Scheduler with the number of processors.
 // The number of processors is user defined.
-void Scheduler::Runjob(Job torun)
+void Scheduler::runJob(Job torun)
 {		
 	//runs job just poped off of prority queue 
 	//O(c)

@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <set>
 #include <queue>
+#include <algorithm>
+#include <list>
 
 
 using std::cin;
@@ -50,7 +52,7 @@ public:
 
 	void DecrementTimer(); //decrement time for each running job //go through running job queue and decrement each time value 
 //	void freeprocessors(int completed);	//
-	void Runjob(Job torun);
+	void runJob(Job torun);
 	//decrease timer after each tick 
 	//also relases processors during this time 
 	//
@@ -63,7 +65,7 @@ private:
 	priority_queue<Job, vector<Job> , Compareclass> waitqueue;				//wait queue made of jobs need to have queue based on number of ticks is min heap  
 
 	//Running queue could use vector, set or map 
-	vector<Job> runningqueue; 
+	list<Job> runningqueue; 
 
 	int freepool; //holds current number of processors avaiable to use 	
 };

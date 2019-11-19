@@ -32,17 +32,41 @@ void App::runApp()
 
 	int jobid = 1;
 	Job newJob("",0,0,0);
+	int ticks = 1;
+	bool availProc = false;
+	Job toDelete("",0,0,0);
 
 	while (!infile.eof())
-	{
+	{	
+		cout << "Tick Number " << ticks << ":" << endl;
 		newJob = testing.readline(infile, jobid);
-		++jobid;
-		testing.insertJob(newJob);
-		
-		if(newJob.getJobdes() == "")
-		{
+
+	    if(newJob.getJobdes() == "")
+		{	//Job ID is incremented by default if the job is null decrease the value to display right Job ID
 			continue;
 		}
+		else 
+		{	
+			++ticks;
+			++jobid;
+			testing.insertJob(newJob);
+			toDelete = testing.findShortest();
+			availProc = testing.checkAvailable(toDelete.getProcessor());
+
+			if(availProc == false)
+			{
+				continue;
+			}
+
+			else 
+			{
+				testing.deleteShortest();
+				testing.runJob(toDelete);			
+			}
+		}
+			testing.DecrementTimer();
+			testing.freeProcessors();
+		
 	}
 }
 
