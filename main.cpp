@@ -1,8 +1,8 @@
 /*
 Authors: Parker Guillen, Josh Mathia
 Date: 11/13/19
-Class: Cpts 223 
-Project: PA#5 Scheduler 
+Class: Cpts 223
+Project: PA#5 Scheduler
 Description:
 */
 
@@ -10,9 +10,9 @@ Description:
 
 int main()
 {
-	App startApp;
+    App startApp;
 
-	startApp.runApp();
+    startApp.runApp();
 
-	return 0;
+    return 0;
 }

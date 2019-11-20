@@ -7,8 +7,8 @@ public:
     ~App();
     void runApp();
     string filePrompt();
-	int processorPrompt();
-	void readFile(ifstream & infile);
+    int processorPrompt();
+    void readFile(ifstream & infile);
 
  private:
 };
